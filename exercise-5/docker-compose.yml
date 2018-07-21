@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  nodeServer:
+    build: .
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./views/:/views/
+      - ./routes/:/routes/
+    depends_on:
+      - postgres
+      - mongo
+  
+  postgres:
+    image: postgres:9.6
+    container_name: postgres
+    ports:
+    - "5432:5432"
+  
+  mongo:
+    image: mongo:3.6.6-jessie
+    container_name: mongo
+    environment:
+      - MONGO_DATA_DIR=/data/db
+    ports:
+    - "27017:27017"
